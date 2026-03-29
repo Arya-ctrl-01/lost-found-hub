@@ -79,7 +79,11 @@ function initMapPicker(mapId, latId, lngId, defaultLat, defaultLng, readonly) {
 
   let marker = L.marker([defaultLat, defaultLng]).addTo(map);
 
-  if (!readonly) {
+  // Set initial values so location is saved even without clicking
+  if (!readonly && latId && lngId) {
+    document.getElementById(latId).value = defaultLat.toFixed ? defaultLat.toFixed(8) : defaultLat;
+    document.getElementById(lngId).value = defaultLng.toFixed ? defaultLng.toFixed(8) : defaultLng;
+
     map.on('click', function (e) {
       map.removeLayer(marker);
       marker = L.marker(e.latlng).addTo(map);

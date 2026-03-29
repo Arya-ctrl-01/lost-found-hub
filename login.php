@@ -42,6 +42,11 @@ if (isset($_SESSION['user_id'])) {
           <label class="form-label fw-medium">Password</label>
           <input type="password" name="password" class="form-control form-control-lg" placeholder="••••••••" required>
         </div>
+        <div class="text-end mb-3">
+  <a href="forgot_password.php" class="small text-primary">
+    Forgot Password?
+  </a>
+</div>
         <button type="submit" class="btn btn-primary btn-lg w-100">Sign In</button>
       </form>
 

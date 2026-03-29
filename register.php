@@ -35,7 +35,7 @@ if (isset($_SESSION['user_id'])) {
       <form action="api/register_process.php" method="POST">
         <div class="mb-3">
           <label class="form-label fw-medium">Full Name</label>
-          <input type="text" name="full_name" class="form-control" placeholder="John Doe" required>
+          <input type="text" name="full_name" class="form-control" placeholder="Your Name" required>
         </div>
         <div class="mb-3">
           <label class="form-label fw-medium">Student ID</label>

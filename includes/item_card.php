@@ -1,38 +1,72 @@
 <?php
 /**
- * Reusable Item Card partial
- * Expects: $item array in scope
+ * Reusable Item Card (Improved)
+ * Expects: $item array
  */
 ?>
-<div class="item-card card h-100">
-  <div class="card-img-wrapper position-relative">
-    <?php if ($item['image']): ?>
-      <img src="<?= $BASE_URL ?>/uploads/<?= e($item['image']) ?>" alt="<?= e($item['title']) ?>">
+
+<div class="item-card card h-100 shadow-sm border-0">
+
+  <!-- IMAGE SECTION -->
+  <div class="card-img-wrapper position-relative overflow-hidden">
+
+    <?php if (!empty($item['image']) && file_exists("uploads/" . $item['image'])): ?>
+      <img 
+        src="<?= $BASE_URL ?>/uploads/<?= e($item['image']) ?>" 
+        alt="<?= e($item['title']) ?>"
+        class="w-100"
+        style="height:180px; object-fit:cover;"
+      >
     <?php else: ?>
-      <div class="card-img-placeholder"><span>📦</span></div>
+      <div class="card-img-placeholder d-flex align-items-center justify-content-center bg-light"
+           style="height:180px;">
+        <span style="font-size:30px;">📦</span>
+      </div>
     <?php endif; ?>
-    <span class="badge position-absolute top-0 start-0 m-2 <?= $item['type']==='lost' ? 'bg-danger' : 'bg-success' ?>">
+
+    <!-- TYPE BADGE -->
+    <span class="badge position-absolute top-0 start-0 m-2 
+      <?= $item['type']==='lost' ? 'bg-danger' : 'bg-success' ?>">
       <?= $item['type']==='lost' ? '🔴 Lost' : '🟢 Found' ?>
     </span>
-    <span class="badge position-absolute top-0 end-0 m-2 status-<?= $item['status'] ?>">
+
+    <!-- STATUS BADGE -->
+    <span class="badge position-absolute top-0 end-0 m-2 
+      <?= $item['status']==='approved' ? 'bg-primary' : 'bg-warning text-dark' ?>">
       <?= ucfirst($item['status']) ?>
     </span>
-    <?php if (!empty($matchedIds[$item['id']])): ?>
-    <span class="badge position-absolute bottom-0 start-50 translate-middle-x mb-2 bg-warning text-dark shadow" style="animation: pulse 2s infinite;">
-      🔗 Possible Match Found
-    </span>
-    <?php endif; ?>
+
   </div>
-  <div class="card-body">
-    <h6 class="card-title font-heading fw-semibold"><?= e($item['title']) ?></h6>
-    <p class="card-text text-muted small line-clamp-2"><?= e($item['description']) ?></p>
-    <div class="d-flex flex-column gap-1 text-muted small mb-2">
-      <span><i class="bi bi-geo-alt me-1"></i><?= e($item['location_name']) ?></span>
-      <span><i class="bi bi-calendar me-1"></i><?= date('M d, Y', strtotime($item['date'])) ?></span>
+
+  <!-- BODY -->
+  <div class="card-body d-flex flex-column">
+
+    <!-- TITLE -->
+    <h6 class="card-title fw-semibold mb-1">
+      <?= e($item['title']) ?>
+    </h6>
+
+    <!-- DESCRIPTION -->
+    <p class="card-text text-muted small mb-2" style="min-height:40px;">
+      <?= e(substr($item['description'], 0, 80)) ?>...
+    </p>
+
+    <!-- META -->
+    <div class="small text-muted mb-2">
+      <div><i class="bi bi-geo-alt me-1"></i><?= e($item['location_name']) ?></div>
+      <div><i class="bi bi-calendar me-1"></i><?= date('M d, Y', strtotime($item['date'])) ?></div>
     </div>
-    <span class="badge bg-light text-dark border small"><?= e($item['category']) ?></span>
-    <a href="<?= $BASE_URL ?>/item_details.php?id=<?= $item['id'] ?>" class="btn btn-primary btn-sm w-100 mt-3">
-      <i class="bi bi-eye me-1"></i>View Details
+
+    <!-- CATEGORY -->
+    <span class="badge bg-light text-dark border small mb-2">
+      <?= e($item['category']) ?>
+    </span>
+
+    <!-- BUTTON -->
+    <a href="<?= $BASE_URL ?>/item_details.php?id=<?= $item['id'] ?>"
+       class="btn btn-primary btn-sm mt-auto">
+       <i class="bi bi-eye me-1"></i>View Details
     </a>
+
   </div>
 </div>
